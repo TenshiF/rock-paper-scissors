@@ -7,75 +7,103 @@ function getComputerChoice()
 function playRound(playerSelection, computerSelection)
 {
     playerSelection = playerSelection.toLowerCase()
+    const round = document.createElement('div');
+    document.body.appendChild(round);
     if (playerSelection == "rock")
     {
         if (computerSelection == "Rock")
         {
-            console.log("It's a tie!")
+            round.textContent = ("It's a tie!")
             return 0
         }
         if (computerSelection == "Paper")
         {
-            console.log("Paper beats Rock! You lose!")
+            round.textContent = ("Paper beats Rock! You lose!")
             return -1
         }
-        console.log("Rock beats Scissors! You win!")
+        round.textContent = ("Rock beats Scissors! You win!")
         return 1
     }
     if (playerSelection == "paper")
     {
         if (computerSelection == "Paper")
         {
-            console.log("It's a tie!")
+            round.textContent = ("It's a tie!")
             return 0
         }
         if (computerSelection == "Rock")
         {
-            console.log("Paper beats Rock! You win!")
+            round.textContent = ("Paper beats Rock! You win!")
             return 1
         }
-        console.log("Scissors beats Paper! You lose!")
+        round.textContent = ("Scissors beats Paper! You lose!")
         return -1
     }
     if (playerSelection == "scissors")
     {
         if (computerSelection == "Scissors")
         {
-            console.log("It's a tie!")
+            round.textContent = ("It's a tie!")
             return 0
         }
         if (computerSelection == "Paper")
         {
-            console.log("Scissors beats Paper! You win!")
+            round.textContent = ("Scissors beats Paper! You win!")
             return 1
         }
-        console.log("Rock beats Scissors! You lose!")
+        round.textContent = ("Rock beats Scissors! You lose!")
         return -1
     }
 }
 
-function game()
-{
+function game() {
     let userWins = 0
     let compWins = 0
-    for (let i = 0; i < 5 ; i++)
-    {
-        round = playRound(prompt(),getComputerChoice())
-        if (round == 1) {userWins++}
-        else if (round == -1) {compWins++}
-    }
-    if (userWins > compWins)
-    {
+    let count = 0;
+
+    const score = document.createElement('div');
+    document.body.appendChild(score);
+    
+    buttons.forEach((button) => {
+        button.addEventListener('click', () => {
+            round = playRound(button.textContent, getComputerChoice());
+            if (round == 1) {userWins++}
+            else if (round == -1) {compWins++}
+            count ++;
+        })
+    });
+
+    console.log(userWins);
+    console.log(compWins);
+    console.log(count);
+
+    if (userWins > compWins) {
         console.log("The score is " + userWins.toString() + " - " + compWins.toString() + ". You win!")
     }
-    else if (userWins < compWins)
-    {
+    else if (userWins < compWins) {
         console.log("The score is " + userWins.toString() + " - " + compWins.toString() + ". You lose!")
     }
-    else
-    {
+    else {
         console.log("The score is " + userWins.toString() + " - " + compWins.toString() + ". It's a tie!")
     }
+    
+    
 }
 
-game()
+const rButton = document.createElement('button');
+rButton.textContent = 'Rock';
+document.body.appendChild(rButton);
+
+const pButton = document.createElement('button');
+pButton.textContent = 'Paper';
+document.body.appendChild(pButton);
+
+const sButton = document.createElement('button');
+sButton.textContent = 'Scissors';
+document.body.appendChild(sButton);
+
+const div = document.createElement('div');
+
+const buttons = document.querySelectorAll('button');
+
+game();
