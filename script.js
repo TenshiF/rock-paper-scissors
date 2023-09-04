@@ -1,3 +1,6 @@
+let userWins = 0;
+let compWins = 0;
+
 function getComputerChoice()
 {
     let choices = ["Rock", "Paper", "Scissors"]
@@ -6,10 +9,11 @@ function getComputerChoice()
 
 function playRound(playerSelection, computerSelection)
 {
-    playerSelection = playerSelection.toLowerCase()
+    console.log(playerSelection);
+    console.log(computerSelection);
     const round = document.createElement('div');
     document.body.appendChild(round);
-    if (playerSelection == "rock")
+    if (playerSelection == "Rock")
     {
         if (computerSelection == "Rock")
         {
@@ -18,13 +22,15 @@ function playRound(playerSelection, computerSelection)
         }
         if (computerSelection == "Paper")
         {
+            compWins++;
             round.textContent = ("Paper beats Rock! You lose!")
             return -1
         }
+        userWins++;
         round.textContent = ("Rock beats Scissors! You win!")
         return 1
     }
-    if (playerSelection == "paper")
+    if (playerSelection == "Paper")
     {
         if (computerSelection == "Paper")
         {
@@ -33,13 +39,15 @@ function playRound(playerSelection, computerSelection)
         }
         if (computerSelection == "Rock")
         {
+            userWins++;
             round.textContent = ("Paper beats Rock! You win!")
             return 1
         }
+        compWins++;
         round.textContent = ("Scissors beats Paper! You lose!")
         return -1
     }
-    if (playerSelection == "scissors")
+    if (playerSelection == "Scissors")
     {
         if (computerSelection == "Scissors")
         {
@@ -48,46 +56,14 @@ function playRound(playerSelection, computerSelection)
         }
         if (computerSelection == "Paper")
         {
+            userWins++;
             round.textContent = ("Scissors beats Paper! You win!")
             return 1
         }
+        compWins++;
         round.textContent = ("Rock beats Scissors! You lose!")
         return -1
     }
-}
-
-function game() {
-    let userWins = 0
-    let compWins = 0
-    let count = 0;
-
-    const score = document.createElement('div');
-    document.body.appendChild(score);
-    
-    buttons.forEach((button) => {
-        button.addEventListener('click', () => {
-            round = playRound(button.textContent, getComputerChoice());
-            if (round == 1) {userWins++}
-            else if (round == -1) {compWins++}
-            count ++;
-        })
-    });
-
-    console.log(userWins);
-    console.log(compWins);
-    console.log(count);
-
-    if (userWins > compWins) {
-        console.log("The score is " + userWins.toString() + " - " + compWins.toString() + ". You win!")
-    }
-    else if (userWins < compWins) {
-        console.log("The score is " + userWins.toString() + " - " + compWins.toString() + ". You lose!")
-    }
-    else {
-        console.log("The score is " + userWins.toString() + " - " + compWins.toString() + ". It's a tie!")
-    }
-    
-    
 }
 
 const rButton = document.createElement('button');
@@ -106,4 +82,26 @@ const div = document.createElement('div');
 
 const buttons = document.querySelectorAll('button');
 
-game();
+buttons.forEach(button => {
+    button.addEventListener('click', () => {
+        x = playRound(button.textContent, getComputerChoice());
+        const scoreUpdate = document.createElement('div');
+        scoreUpdate.textContent = `The score is now ${userWins} to ${compWins}`;
+        document.body.appendChild(scoreUpdate);
+        if (userWins == 5) {
+            const winner = document.createElement('div');
+            winner.textContent = "YOU WIN!";
+            document.body.appendChild(winner);
+            return;
+        }
+        else if (compWins == 5) {
+            const winner = document.createElement('div');
+            winner.textContent = "THE COMPUTER WINS!"
+            document.body.appendChild(winner);
+            return;
+        }
+
+    })
+    
+})
+
